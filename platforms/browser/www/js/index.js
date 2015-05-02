@@ -20,6 +20,7 @@ var app = {
     // Application Constructor
     initialize: function() {
         this.bindEvents();
+        detailPage.hidden = true;
     },
     // Bind Event Listeners
     //
@@ -27,6 +28,9 @@ var app = {
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
+        refreshButton.addEventListener('touchstart', this.refreshDeviceList, false);
+        disconnectButton.addEventListener('touchstart', this.disconnect, false);
+        deviceList.addEventListener('touchstart', this.connect, false); // assume not scrolling
     },
     // deviceready Event Handler
     //
@@ -34,6 +38,8 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
+        app.refreshDeviceList();
+
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
@@ -45,7 +51,29 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
-    }
-};
+    },
+    refreshDeviceList: function() {
+        alert("refreshDeviceList called");
+        deviceList.innerHTML = ''; // empties the list
+        // scan for all devices
+        ble.scan([], 5, app.onDiscoverDevice, app.onError);
+    },
+    onDiscoverDevice: function(device) {
+        alert("onDiscoverDevice called");
+        var listItem = document.createElement('li'),
+            html = '<b>' + device.name + '</b><br/>' +
+                'RSSI: ' + device.rssi + '&nbsp;|&nbsp;' +
+                device.id;
+
+        listItem.dataset.deviceId = device.id;  // TODO
+        listItem.innerHTML = html;
+        deviceList.appendChild(listItem);
+    },
+    connect: function(e) {
+        alert("connect button pushed");
+    },
+    disconnect: function(e) {
+        alert("disconnect button pushed");
+    }};
 
 app.initialize();
