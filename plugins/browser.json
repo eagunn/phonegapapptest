@@ -9,6 +9,9 @@
     "installed_plugins": {
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.wyolution.blupal"
+        },
+        "com.megster.cordova.ble": {
+            "PACKAGE_NAME": "com.wyolution.blupal"
         }
     },
     "dependent_plugins": {}

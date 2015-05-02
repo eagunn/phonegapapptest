@@ -1,9 +1,18 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
-module.exports = [];
+module.exports = [
+    {
+        "file": "plugins/com.megster.cordova.ble/www/ble.js",
+        "id": "com.megster.cordova.ble.ble",
+        "clobbers": [
+            "ble"
+        ]
+    }
+];
 module.exports.metadata = 
 // TOP OF METADATA
 {
-    "cordova-plugin-whitelist": "1.0.1-dev"
+    "cordova-plugin-whitelist": "1.0.1-dev",
+    "com.megster.cordova.ble": "0.1.7"
 }
 // BOTTOM OF METADATA
 });
